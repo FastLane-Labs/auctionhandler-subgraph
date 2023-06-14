@@ -1,0 +1,72 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FastLaneAuctionHandler
+    network: matic
+    source:
+      address: "0xf5df545113dee4df10f8149090aa737ddc05070a"
+      abi: FastLaneAuctionHandler
+      startBlock: 36588220
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - RelayFlashBid
+        - RelayInitialized
+        - RelayMinAmountSet
+        - RelayPausedStateSet
+        - RelayProcessingPaidValidator
+        - RelayProcessingWithdrewStakeShare
+        - RelayShareProposed
+        - RelayShareSet
+        - RelaySimulatedFlashBid
+        - RelaySimulatorStateSet
+        - RelayValidatorDisabled
+        - RelayValidatorEnabled
+        - RelayValidatorPayeeUpdated
+        - RelayWithdrawDust
+        - RelayWithdrawStuckERC20
+        - RelayWithdrawStuckNativeToken
+      abis:
+        - name: FastLaneAuctionHandler
+          file: ./abis/FastLaneAuctionHandler.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RelayFlashBid(indexed address,uint256,indexed bytes32,indexed address,address)
+          handler: handleRelayFlashBid
+        - event: RelayInitialized(uint24,uint256)
+          handler: handleRelayInitialized
+        - event: RelayMinAmountSet(uint256)
+          handler: handleRelayMinAmountSet
+        - event: RelayPausedStateSet(bool)
+          handler: handleRelayPausedStateSet
+        - event: RelayProcessingPaidValidator(indexed address,uint256,indexed address)
+          handler: handleRelayProcessingPaidValidator
+        - event: RelayProcessingWithdrewStakeShare(indexed address,uint256)
+          handler: handleRelayProcessingWithdrewStakeShare
+        - event: RelayShareProposed(uint24,uint256)
+          handler: handleRelayShareProposed
+        - event: RelayShareSet(uint24)
+          handler: handleRelayShareSet
+        - event: RelaySimulatedFlashBid(indexed address,uint256,indexed bytes32,indexed address,address)
+          handler: handleRelaySimulatedFlashBid
+        - event: RelaySimulatorStateSet(bool)
+          handler: handleRelaySimulatorStateSet
+        - event: RelayValidatorDisabled(address)
+          handler: handleRelayValidatorDisabled
+        - event: RelayValidatorEnabled(address,address)
+          handler: handleRelayValidatorEnabled
+        - event: RelayValidatorPayeeUpdated(address,address,indexed address)
+          handler: handleRelayValidatorPayeeUpdated
+        - event: RelayWithdrawDust(indexed address,uint256)
+          handler: handleRelayWithdrawDust
+        - event: RelayWithdrawStuckERC20(indexed address,indexed address,uint256)
+          handler: handleRelayWithdrawStuckERC20
+        - event: RelayWithdrawStuckNativeToken(indexed address,uint256)
+          handler: handleRelayWithdrawStuckNativeToken
+      file: ./src/fast-lane-auction-handler.ts

@@ -1,0 +1,156 @@
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayFlashBid @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  amount: BigInt! # uint256
+  oppTxHash: Bytes! # bytes32
+  validator: Bytes! # address
+  searcherContractAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayInitialized @entity(immutable: true) {
+  id: Bytes!
+  initialStakeShare: Int! # uint24
+  minAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayMinAmountSet @entity(immutable: true) {
+  id: Bytes!
+  minAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayPausedStateSet @entity(immutable: true) {
+  id: Bytes!
+  state: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayProcessingPaidValidator @entity(immutable: true) {
+  id: Bytes!
+  validator: Bytes! # address
+  validatorPayment: BigInt! # uint256
+  initiator: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayProcessingWithdrewStakeShare @entity(immutable: true) {
+  id: Bytes!
+  recipient: Bytes! # address
+  amountWithdrawn: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayShareProposed @entity(immutable: true) {
+  id: Bytes!
+  amount: Int! # uint24
+  deadline: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayShareSet @entity(immutable: true) {
+  id: Bytes!
+  amount: Int! # uint24
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelaySimulatedFlashBid @entity(immutable: true) {
+  id: Bytes!
+  sender: Bytes! # address
+  amount: BigInt! # uint256
+  oppTxHash: Bytes! # bytes32
+  validator: Bytes! # address
+  searcherContractAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelaySimulatorStateSet @entity(immutable: true) {
+  id: Bytes!
+  state: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayValidatorDisabled @entity(immutable: true) {
+  id: Bytes!
+  validator: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayValidatorEnabled @entity(immutable: true) {
+  id: Bytes!
+  validator: Bytes! # address
+  payee: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayValidatorPayeeUpdated @entity(immutable: true) {
+  id: Bytes!
+  validator: Bytes! # address
+  payee: Bytes! # address
+  initiator: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayWithdrawDust @entity(immutable: true) {
+  id: Bytes!
+  receiver: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayWithdrawStuckERC20 @entity(immutable: true) {
+  id: Bytes!
+  receiver: Bytes! # address
+  token: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RelayWithdrawStuckNativeToken @entity(immutable: true) {
+  id: Bytes!
+  receiver: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
