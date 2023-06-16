@@ -7,54 +7,51 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts"
-import { OwnershipTransferred } from "../generated/schema"
-import { OwnershipTransferred as OwnershipTransferredEvent } from "../generated/FastLaneAuctionHandler/FastLaneAuctionHandler"
-import { handleOwnershipTransferred } from "../src/fast-lane-auction-handler"
-import { createOwnershipTransferredEvent } from "./fast-lane-auction-handler-utils"
+
+
+import { 
+  handleRelayValidatorEnabled,
+  handleRelayValidatorDisabled,
+  handleRelayFlashBid
+ } from "../src/fast-lane-auction-handler"
+import {
+  createRelayValidatorEnabledEvent,
+  createRelayValidatorDisabledEvent,
+  createRelayFlashBidEvent
+ } from "./fast-lane-auction-handler-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
 
 describe("Describe entity assertions", () => {
-  beforeAll(() => {
-    let previousOwner = Address.fromString(
-      "0x0000000000000000000000000000000000000001"
-    )
-    let newOwner = Address.fromString(
-      "0x0000000000000000000000000000000000000001"
-    )
-    let newOwnershipTransferredEvent = createOwnershipTransferredEvent(
-      previousOwner,
-      newOwner
-    )
-    handleOwnershipTransferred(newOwnershipTransferredEvent)
-  })
+  beforeAll(() => {})
 
   afterAll(() => {
     clearStore()
   })
 
+  test("Enable Validator", () => {
+    // Store will be lowercase
+    let newEnableValidatorEvent = createRelayValidatorEnabledEvent(
+      Address.fromString("0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"),
+      Address.fromString("0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff")
+    );
+    handleRelayValidatorEnabled(newEnableValidatorEvent);
+    assert.entityCount("Validator", 1);
+    assert.fieldEquals(
+      "Validator",
+      "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff".toLowerCase(),
+      "bidsReceived",
+      "0"
+    );
+    assert.fieldEquals(
+      "Validator",
+      "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff".toLowerCase(),
+      "status",
+      "ACTIVE"
+    );
+  });
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("OwnershipTransferred created and stored", () => {
-    assert.entityCount("OwnershipTransferred", 1)
-
-    // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
-    assert.fieldEquals(
-      "OwnershipTransferred",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "previousOwner",
-      "0x0000000000000000000000000000000000000001"
-    )
-    assert.fieldEquals(
-      "OwnershipTransferred",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
-      "newOwner",
-      "0x0000000000000000000000000000000000000001"
-    )
-
-    // More assert options:
-    // https://thegraph.com/docs/en/developer/matchstick/#asserts
-  })
 })
