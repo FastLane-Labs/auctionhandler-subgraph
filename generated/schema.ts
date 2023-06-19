@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class GlobalStats extends Entity {
+export class GlobalStat extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -19,25 +19,25 @@ export class GlobalStats extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save GlobalStats entity without an ID");
+    assert(id != null, "Cannot save GlobalStat entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type GlobalStats must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type GlobalStat must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("GlobalStats", id.toBytes().toHexString(), this);
+      store.set("GlobalStat", id.toBytes().toHexString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): GlobalStats | null {
-    return changetype<GlobalStats | null>(
-      store.get_in_block("GlobalStats", id.toHexString())
+  static loadInBlock(id: Bytes): GlobalStat | null {
+    return changetype<GlobalStat | null>(
+      store.get_in_block("GlobalStat", id.toHexString())
     );
   }
 
-  static load(id: Bytes): GlobalStats | null {
-    return changetype<GlobalStats | null>(
-      store.get("GlobalStats", id.toHexString())
+  static load(id: Bytes): GlobalStat | null {
+    return changetype<GlobalStat | null>(
+      store.get("GlobalStat", id.toHexString())
     );
   }
 
@@ -108,7 +108,7 @@ export class GlobalStats extends Entity {
 
   get hourlyCollectionSnapshotGlobal(): HourlyCollectionSnapshotGlobalLoader {
     return new HourlyCollectionSnapshotGlobalLoader(
-      "GlobalStats",
+      "GlobalStat",
       this.get("id")!.toString(),
       "hourlyCollectionSnapshotGlobal"
     );
@@ -116,7 +116,7 @@ export class GlobalStats extends Entity {
 
   get dailyCollectionSnapshotGlobal(): DailyCollectionSnapshotGlobalLoader {
     return new DailyCollectionSnapshotGlobalLoader(
-      "GlobalStats",
+      "GlobalStat",
       this.get("id")!.toString(),
       "dailyCollectionSnapshotGlobal"
     );
@@ -124,7 +124,7 @@ export class GlobalStats extends Entity {
 
   get weeklyCollectionSnapshotGlobal(): WeeklyCollectionSnapshotGlobalLoader {
     return new WeeklyCollectionSnapshotGlobalLoader(
-      "GlobalStats",
+      "GlobalStat",
       this.get("id")!.toString(),
       "weeklyCollectionSnapshotGlobal"
     );
@@ -1063,6 +1063,19 @@ export class Validator extends Entity {
 
   set totalTips(value: BigInt) {
     this.set("totalTips", Value.fromBigInt(value));
+  }
+
+  get totalExecutedBundlesCount(): BigInt {
+    let value = this.get("totalExecutedBundlesCount");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalExecutedBundlesCount(value: BigInt) {
+    this.set("totalExecutedBundlesCount", Value.fromBigInt(value));
   }
 
   get lastBundleReceivedTimestamp(): i32 {

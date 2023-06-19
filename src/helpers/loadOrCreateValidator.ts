@@ -16,6 +16,7 @@ export function loadOrCreateValidator(validatorAddress: Bytes): Validator {
         validator.lastBundleReceivedTimestamp = ZERO_INT;
         validator.enabledAt = ZERO_INT;
         validator.disabledAt = ZERO_INT;
+        validator.totalExecutedBundlesCount = ZERO;
         validator.save();
         //log.info('ValID {}',[validator.id]);
     }

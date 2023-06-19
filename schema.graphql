@@ -1,4 +1,4 @@
-type GlobalStats @entity {
+type GlobalStat @entity {
   id: Bytes!
   totalExecutedBundlesCount: BigInt!
   totalValidatorsPaid: BigInt!
@@ -14,7 +14,7 @@ type GlobalStats @entity {
 type HourlyCollectionSnapshotGlobal @entity {
   "The hour"
   id: ID!
-  target: GlobalStats!
+  target: GlobalStat!
   timestamp: Int!
   rangeVolume: BigInt!
   validators: [Validator!]!
@@ -25,7 +25,7 @@ type HourlyCollectionSnapshotGlobal @entity {
 type DailyCollectionSnapshotGlobal @entity {
   "The day"
   id: ID!
-  target: GlobalStats!
+  target: GlobalStat!
   timestamp: Int!
   rangeVolume: BigInt!
   validators: [Validator!]!
@@ -36,7 +36,7 @@ type DailyCollectionSnapshotGlobal @entity {
 type WeeklyCollectionSnapshotGlobal @entity {
   "The week"
   id: ID!
-  target: GlobalStats!
+  target: GlobalStat!
   timestamp: Int!
   rangeVolume: BigInt!
   validators: [Validator!]!
@@ -97,6 +97,7 @@ type Validator @entity {
   enabledAt: Int!
   disabledAt: Int!
   totalTips: BigInt!
+  totalExecutedBundlesCount: BigInt!
   lastBundleReceivedTimestamp: Int!
   hourlyValidatorSnapshot: [HourlyValidatorSnapshot!]! @derivedFrom(field: "target")
   dailyValidatorSnapshot: [DailyValidatorSnapshot!]! @derivedFrom(field: "target")

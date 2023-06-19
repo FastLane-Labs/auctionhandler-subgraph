@@ -1,5 +1,5 @@
 import { BigInt, Bytes, log } from "@graphprotocol/graph-ts"
-import { logStore } from 'matchstick-as/assembly/store'
+// import { logStore } from 'matchstick-as/assembly/store'
 
 import {
   RelayFlashBid as RelayFlashBidEvent,
@@ -25,6 +25,111 @@ import { loadOrCreateSearcher } from "./helpers/loadOrCreateSearcher";
 import { loadOrCreateHourlyCollectionSnapshotGlobal, loadOrCreateHourlyValidatorSnapshot } from "./helpers/collectionshapshots/loadOrCreateHourlyCollectionSnapshots";
 import { loadOrCreateDailyValidatorSnapshot, loadOrCreateDailyCollectionSnapshotGlobal } from "./helpers/collectionshapshots/loadOrCreateDailyCollectionSnapshots";
 import { loadOrCreateWeeklyValidatorSnapshot, loadOrCreateWeeklyCollectionSnapshotGlobal } from "./helpers/collectionshapshots/loadOrCreateWeeklyCollectionSnapshots";
+
+
+
+function updateHourly(event: RelayFlashBidEvent,timeRangeName: string, divBy: number): void { 
+  // Hourly loops 
+
+  // Floor the range.
+  
+  let timeRange = event.block.timestamp.div(BigInt.fromI32(divBy as i32)).toI32();
+  let entityGlobalId = `${STATS_ID.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+  let entityLocalId = `${event.params.validator.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+
+  let globalEntityForRange = loadOrCreateHourlyCollectionSnapshotGlobal(entityGlobalId);
+  let localEntityForRange = loadOrCreateHourlyValidatorSnapshot(entityLocalId, event.params.validator);
+  // Global Specific:
+  // Add the validator in range
+  if (!globalEntityForRange.validators.includes(event.params.validator)) {
+    const vList = globalEntityForRange.validators;
+    vList.push(event.params.validator);
+    globalEntityForRange.validators = vList;
+    globalEntityForRange.save();
+  }
+
+  // Both
+  globalEntityForRange.rangeTransactions = globalEntityForRange.rangeTransactions + 1;
+  globalEntityForRange.rangeVolume = globalEntityForRange.rangeVolume.plus(event.params.amount);
+  if (globalEntityForRange.timestamp == 0) globalEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > globalEntityForRange.topBid) globalEntityForRange.topBid = event.params.amount;
+
+  localEntityForRange.rangeTransactions = localEntityForRange.rangeTransactions + 1;
+  localEntityForRange.rangeVolume = localEntityForRange.rangeVolume.plus(event.params.amount);
+  if (localEntityForRange.timestamp == 0) localEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > localEntityForRange.topBid) localEntityForRange.topBid = event.params.amount;
+
+  globalEntityForRange.save();
+  localEntityForRange.save();
+}
+function updateDaily(event: RelayFlashBidEvent,timeRangeName: string, divBy: number): void { 
+  // Daily loops 
+
+  // Floor the range.
+  
+  let timeRange = event.block.timestamp.div(BigInt.fromI32(divBy as i32)).toI32();
+  let entityGlobalId = `${STATS_ID.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+  let entityLocalId = `${event.params.validator.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+
+  let globalEntityForRange = loadOrCreateDailyCollectionSnapshotGlobal(entityGlobalId);
+  let localEntityForRange = loadOrCreateDailyValidatorSnapshot(entityLocalId, event.params.validator);
+  // Global Specific:
+  // Add the validator in range
+  if (!globalEntityForRange.validators.includes(event.params.validator)) {
+    const vList = globalEntityForRange.validators;
+    vList.push(event.params.validator);
+    globalEntityForRange.validators = vList;
+    globalEntityForRange.save();
+  }
+
+  // Both
+  globalEntityForRange.rangeTransactions = globalEntityForRange.rangeTransactions + 1;
+  globalEntityForRange.rangeVolume = globalEntityForRange.rangeVolume.plus(event.params.amount);
+  if (globalEntityForRange.timestamp == 0) globalEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > globalEntityForRange.topBid) globalEntityForRange.topBid = event.params.amount;
+
+  localEntityForRange.rangeTransactions = localEntityForRange.rangeTransactions + 1;
+  localEntityForRange.rangeVolume = localEntityForRange.rangeVolume.plus(event.params.amount);
+  if (localEntityForRange.timestamp == 0) localEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > localEntityForRange.topBid) localEntityForRange.topBid = event.params.amount;
+
+  globalEntityForRange.save();
+  localEntityForRange.save();
+}
+function updateWeekly(event: RelayFlashBidEvent,timeRangeName: string, divBy: number): void { 
+  // Hourly loops 
+
+  // Floor the range.
+  
+  let timeRange = event.block.timestamp.div(BigInt.fromI32(divBy as i32)).toI32();
+  let entityGlobalId = `${STATS_ID.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+  let entityLocalId = `${event.params.validator.toHexString()}-${timeRangeName}-${timeRange.toString()}`;
+
+  let globalEntityForRange = loadOrCreateWeeklyCollectionSnapshotGlobal(entityGlobalId);
+  let localEntityForRange = loadOrCreateWeeklyValidatorSnapshot(entityLocalId, event.params.validator);
+  // Global Specific:
+  // Add the validator in range
+  if (!globalEntityForRange.validators.includes(event.params.validator)) {
+    const vList = globalEntityForRange.validators;
+    vList.push(event.params.validator);
+    globalEntityForRange.validators = vList;
+    globalEntityForRange.save();
+  }
+
+  // Both
+  globalEntityForRange.rangeTransactions = globalEntityForRange.rangeTransactions + 1;
+  globalEntityForRange.rangeVolume = globalEntityForRange.rangeVolume.plus(event.params.amount);
+  if (globalEntityForRange.timestamp == 0) globalEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > globalEntityForRange.topBid) globalEntityForRange.topBid = event.params.amount;
+
+  localEntityForRange.rangeTransactions = localEntityForRange.rangeTransactions + 1;
+  localEntityForRange.rangeVolume = localEntityForRange.rangeVolume.plus(event.params.amount);
+  if (localEntityForRange.timestamp == 0) localEntityForRange.timestamp = timeRange * divBy as i32;
+  if (event.params.amount > localEntityForRange.topBid) localEntityForRange.topBid = event.params.amount;
+
+  globalEntityForRange.save();
+  localEntityForRange.save();
+}
 
 export function handleRelayFlashBid(event: RelayFlashBidEvent): void {
   let entity = new RelayFlashBid(
@@ -54,6 +159,7 @@ export function handleRelayFlashBid(event: RelayFlashBidEvent): void {
   const validator = loadOrCreateValidator(event.params.validator);
   validator.totalTips = validator.totalTips.plus(event.params.amount);
   validator.lastBundleReceivedTimestamp = event.block.timestamp.toI32();
+  validator.totalExecutedBundlesCount = validator.totalExecutedBundlesCount.plus(ONE);
   validator.save();
 
   const stats = loadOrCreateGlobalStats();
@@ -61,68 +167,13 @@ export function handleRelayFlashBid(event: RelayFlashBidEvent): void {
   stats.totalValidatorsPaid = stats.totalValidatorsPaid.plus(event.params.amount);
   stats.save();
 
-  // Check crocswap for Id definition or entity
   const logIndex = event.logIndex;
-  // For hourly global it will only be GlobalStats-HOUR-${HOUR}
-  // For hourly local to validator vID-HOUR-${HOUR} ?
-  const timeRangeInfo = [
-    {name: 'HOURLY', divBy: 3600, localFn:loadOrCreateHourlyValidatorSnapshot, globalFn: loadOrCreateHourlyCollectionSnapshotGlobal},
-    {name: 'DAILY', divBy: 86400, localFn:loadOrCreateDailyValidatorSnapshot, globalFn: loadOrCreateDailyCollectionSnapshotGlobal},
-    {name: 'WEEKLY', divBy: 604800, localFn:loadOrCreateWeeklyValidatorSnapshot, globalFn: loadOrCreateWeeklyCollectionSnapshotGlobal},
-  ];
 
-  timeRangeInfo.forEach(range => {
-
-    let divBy = range.divBy;
-    let timeRangeName = range.name;
-
-    // Floor the range.
-    let timeRange = ~~(event.block.timestamp.toI32() / divBy);
-    let entityGlobalId = `${STATS_ID}-${timeRangeName}-${timeRange}`;
-    let entityLocalId = `${validator.id}-${timeRangeName}-${timeRange}`;
-
-    let globalEntityForRange = range.globalFn(entityGlobalId);
-    let localEntityForRange = range.localFn(entityLocalId, validator.id);
-    // Global Specific:
-    // Add the validator in range
-    if (!globalEntityForRange.validators.includes(validator.id)) {
-      const vList = [...globalEntityForRange.validators];
-      vList.push(validator.id);
-      globalEntityForRange.validators = vList;
-      globalEntityForRange.save();
-    }
-
-    // Both
-    [globalEntityForRange,localEntityForRange].forEach(entity => {
-
-      entity.rangeTransactions = entity.rangeTransactions + 1;
-      entity.rangeVolume = entity.rangeVolume.plus(event.params.amount);
-      if (event.params.amount > entity.topBid) entity.topBid = event.params.amount;
-
-      // Assign timestamp
-      if (entity.timestamp == 0) {
-        entity.timestamp = timeRange * divBy;
-      }
-
-      // TODO: Consider AVG in fields.
-      entity.save();
-
-    });
-
-
-
-
-  });
-
-
-  //
-
-
-  // Figure out .logIndex stuff to make Ids
-  // loadOrCreateHourlyCollectionSnapshotGlobal
-  // loadOrCreateHourlyValidatorSnapshot(id,vId)
+  // updateHourly(event, 'HOURLY', 3600);
+  updateDaily(event, 'DAILY', 3600*24);
+  // updateWeekly(event, 'WEEKLY', 3600*24*7);
   
-
+  // Figure out .logIndex stuff to make Ids
 }
 
 
@@ -130,7 +181,6 @@ export function handleRelayValidatorDisabled(
   event: RelayValidatorDisabledEvent
 ): void {
   const validator = loadOrCreateValidator(event.params.validator);
-  logStore();
   // Drop reactivating already active
   if (validator.status == "INACTIVE") return;
 
@@ -169,5 +219,4 @@ export function handleRelayValidatorEnabled(
 
 
   validator.save();
-  logStore();
 }

@@ -7,30 +7,29 @@ import {
 
 
 export function loadOrCreateWeeklyCollectionSnapshotGlobal(id: string): WeeklyCollectionSnapshotGlobal {
-    const constr = WeeklyCollectionSnapshotGlobal;
-    let snap = constr.load(id);
+    let snap = WeeklyCollectionSnapshotGlobal.load(id);
     if (!snap) {
-            snap = new constr(id);
+            snap = new WeeklyCollectionSnapshotGlobal(id);
             snap.target = STATS_ID;
             snap.timestamp = ZERO_INT;
             snap.rangeVolume = ZERO;
             snap.rangeTransactions = ZERO_INT;
             snap.validators = [];
+            snap.topBid = ZERO;
             snap.save();
         }
     return snap;
 }
 
 export function loadOrCreateWeeklyValidatorSnapshot(id: string, validatorAddress: Bytes): WeeklyValidatorSnapshot {
-    const constr = WeeklyValidatorSnapshot;
-    let snap = constr.load(id);
+    let snap = WeeklyValidatorSnapshot.load(id);
 if (!snap) {
-        snap = new constr(id);
+        snap = new WeeklyValidatorSnapshot(id);
         snap.target = validatorAddress;
         snap.timestamp = ZERO_INT;
         snap.rangeVolume = ZERO;
         snap.rangeTransactions = ZERO_INT;
-
+        snap.topBid = ZERO;
         snap.save();
     }
     return snap;
