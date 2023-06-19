@@ -51,7 +51,12 @@ describe("Describe entity assertions", () => {
       "ACTIVE"
     );
   });
-  // For more test scenarios, see:
-  // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
+
+  test("FlashBid", () => {
+    let newFlashBid = createRelayFlashBidEvent(
+      
+    )
+  });
+
 
 })

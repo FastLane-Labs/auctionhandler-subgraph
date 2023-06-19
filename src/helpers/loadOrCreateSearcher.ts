@@ -10,7 +10,7 @@ export function loadOrCreateSearcher(searcherAddress: Bytes): Searcher {
     if (!searcher) {
         searcher = new Searcher(searcherAddress);
         searcher.address = searcherAddress;
-        searcher.bundlesLanded = ZERO_INT;
+        searcher.bundlesLanded = ZERO;
         searcher.totalTipped = ZERO;
         searcher.lastBundleLandedTimestamp = ZERO_INT;
         searcher.save();

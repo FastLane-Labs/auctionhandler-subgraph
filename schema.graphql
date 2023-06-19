@@ -13,79 +13,73 @@ type GlobalStats @entity {
 
 type HourlyCollectionSnapshotGlobal @entity {
   "The hour"
-  id: Bytes!
+  id: ID!
   target: GlobalStats!
-  timestamp: Int
-  hourlyVolume: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
   validators: [Validator!]!
-  hourlyTransactions: Int
-  hourlyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 
 type DailyCollectionSnapshotGlobal @entity {
   "The day"
-  id: Bytes!
+  id: ID!
   target: GlobalStats!
-  timestamp: Int
-  dailyVolume: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
   validators: [Validator!]!
-  dailyTransactions: Int
-  dailyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 
 type WeeklyCollectionSnapshotGlobal @entity {
   "The week"
-  id: Bytes!
+  id: ID!
   target: GlobalStats!
-  timestamp: Int
-  weeklyVolume: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
   validators: [Validator!]!
-  weeklyTransactions: Int
-  weeklyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 
 type HourlyValidatorSnapshot @entity {
   "The hour"
-  id: Bytes!
+  id: ID!
   target: Validator!
-  timestamp: Int
-  hourlyVolume: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
 
-  hourlyTransactions: Int
-  hourlyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 
 type DailyValidatorSnapshot @entity {
   "The day"
-  id: Bytes!
+  id: ID!
   target: Validator!
-  timestamp: Int
-  dailyVolume: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
 
-  dailyTransactions: Int
-  dailyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 type WeeklyValidatorSnapshot @entity {
   "The week"
-  id: Bytes!
+  id: ID!
   target: Validator!
-  timestamp: Int
-  weeklyVolume: BigDecimal!
-
-  weeklyTransactions: Int
-  weeklyAvgBid: BigDecimal!
-  topBid: BigDecimal!
+  timestamp: Int!
+  rangeVolume: BigInt!
+  validators: [Validator!]!
+  rangeTransactions: Int
+  topBid: BigInt!
 }
 
 type Searcher @entity {
   id: Bytes!
   address: Bytes!
-  bundlesLanded: Int!
+  bundlesLanded: BigInt!
   totalTipped: BigInt!
   lastBundleLandedTimestamp: Int!
   bundles: [RelayFlashBid!]! @derivedFrom(field: "sender")

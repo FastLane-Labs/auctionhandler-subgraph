@@ -132,9 +132,9 @@ export class GlobalStats extends Entity {
 }
 
 export class HourlyCollectionSnapshotGlobal extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -145,40 +145,36 @@ export class HourlyCollectionSnapshotGlobal extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type HourlyCollectionSnapshotGlobal must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type HourlyCollectionSnapshotGlobal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set(
-        "HourlyCollectionSnapshotGlobal",
-        id.toBytes().toHexString(),
-        this
-      );
+      store.set("HourlyCollectionSnapshotGlobal", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): HourlyCollectionSnapshotGlobal | null {
+  static loadInBlock(id: string): HourlyCollectionSnapshotGlobal | null {
     return changetype<HourlyCollectionSnapshotGlobal | null>(
-      store.get_in_block("HourlyCollectionSnapshotGlobal", id.toHexString())
+      store.get_in_block("HourlyCollectionSnapshotGlobal", id)
     );
   }
 
-  static load(id: Bytes): HourlyCollectionSnapshotGlobal | null {
+  static load(id: string): HourlyCollectionSnapshotGlobal | null {
     return changetype<HourlyCollectionSnapshotGlobal | null>(
-      store.get("HourlyCollectionSnapshotGlobal", id.toHexString())
+      store.get("HourlyCollectionSnapshotGlobal", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -207,17 +203,17 @@ export class HourlyCollectionSnapshotGlobal extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get hourlyVolume(): BigDecimal {
-    let value = this.get("hourlyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set hourlyVolume(value: BigDecimal) {
-    this.set("hourlyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
   get validators(): Array<Bytes> {
@@ -233,8 +229,8 @@ export class HourlyCollectionSnapshotGlobal extends Entity {
     this.set("validators", Value.fromBytesArray(value));
   }
 
-  get hourlyTransactions(): i32 {
-    let value = this.get("hourlyTransactions");
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -242,41 +238,28 @@ export class HourlyCollectionSnapshotGlobal extends Entity {
     }
   }
 
-  set hourlyTransactions(value: i32) {
-    this.set("hourlyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get hourlyAvgBid(): BigDecimal {
-    let value = this.get("hourlyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set hourlyAvgBid(value: BigDecimal) {
-    this.set("hourlyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
 export class DailyCollectionSnapshotGlobal extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -287,40 +270,36 @@ export class DailyCollectionSnapshotGlobal extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type DailyCollectionSnapshotGlobal must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyCollectionSnapshotGlobal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set(
-        "DailyCollectionSnapshotGlobal",
-        id.toBytes().toHexString(),
-        this
-      );
+      store.set("DailyCollectionSnapshotGlobal", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): DailyCollectionSnapshotGlobal | null {
+  static loadInBlock(id: string): DailyCollectionSnapshotGlobal | null {
     return changetype<DailyCollectionSnapshotGlobal | null>(
-      store.get_in_block("DailyCollectionSnapshotGlobal", id.toHexString())
+      store.get_in_block("DailyCollectionSnapshotGlobal", id)
     );
   }
 
-  static load(id: Bytes): DailyCollectionSnapshotGlobal | null {
+  static load(id: string): DailyCollectionSnapshotGlobal | null {
     return changetype<DailyCollectionSnapshotGlobal | null>(
-      store.get("DailyCollectionSnapshotGlobal", id.toHexString())
+      store.get("DailyCollectionSnapshotGlobal", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -349,17 +328,17 @@ export class DailyCollectionSnapshotGlobal extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get dailyVolume(): BigDecimal {
-    let value = this.get("dailyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set dailyVolume(value: BigDecimal) {
-    this.set("dailyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
   get validators(): Array<Bytes> {
@@ -375,8 +354,8 @@ export class DailyCollectionSnapshotGlobal extends Entity {
     this.set("validators", Value.fromBytesArray(value));
   }
 
-  get dailyTransactions(): i32 {
-    let value = this.get("dailyTransactions");
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -384,41 +363,28 @@ export class DailyCollectionSnapshotGlobal extends Entity {
     }
   }
 
-  set dailyTransactions(value: i32) {
-    this.set("dailyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get dailyAvgBid(): BigDecimal {
-    let value = this.get("dailyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set dailyAvgBid(value: BigDecimal) {
-    this.set("dailyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
 export class WeeklyCollectionSnapshotGlobal extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -429,40 +395,36 @@ export class WeeklyCollectionSnapshotGlobal extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type WeeklyCollectionSnapshotGlobal must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type WeeklyCollectionSnapshotGlobal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set(
-        "WeeklyCollectionSnapshotGlobal",
-        id.toBytes().toHexString(),
-        this
-      );
+      store.set("WeeklyCollectionSnapshotGlobal", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): WeeklyCollectionSnapshotGlobal | null {
+  static loadInBlock(id: string): WeeklyCollectionSnapshotGlobal | null {
     return changetype<WeeklyCollectionSnapshotGlobal | null>(
-      store.get_in_block("WeeklyCollectionSnapshotGlobal", id.toHexString())
+      store.get_in_block("WeeklyCollectionSnapshotGlobal", id)
     );
   }
 
-  static load(id: Bytes): WeeklyCollectionSnapshotGlobal | null {
+  static load(id: string): WeeklyCollectionSnapshotGlobal | null {
     return changetype<WeeklyCollectionSnapshotGlobal | null>(
-      store.get("WeeklyCollectionSnapshotGlobal", id.toHexString())
+      store.get("WeeklyCollectionSnapshotGlobal", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -491,17 +453,17 @@ export class WeeklyCollectionSnapshotGlobal extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get weeklyVolume(): BigDecimal {
-    let value = this.get("weeklyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set weeklyVolume(value: BigDecimal) {
-    this.set("weeklyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
   get validators(): Array<Bytes> {
@@ -517,8 +479,8 @@ export class WeeklyCollectionSnapshotGlobal extends Entity {
     this.set("validators", Value.fromBytesArray(value));
   }
 
-  get weeklyTransactions(): i32 {
-    let value = this.get("weeklyTransactions");
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -526,41 +488,28 @@ export class WeeklyCollectionSnapshotGlobal extends Entity {
     }
   }
 
-  set weeklyTransactions(value: i32) {
-    this.set("weeklyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get weeklyAvgBid(): BigDecimal {
-    let value = this.get("weeklyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set weeklyAvgBid(value: BigDecimal) {
-    this.set("weeklyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
 export class HourlyValidatorSnapshot extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -571,36 +520,36 @@ export class HourlyValidatorSnapshot extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type HourlyValidatorSnapshot must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type HourlyValidatorSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("HourlyValidatorSnapshot", id.toBytes().toHexString(), this);
+      store.set("HourlyValidatorSnapshot", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): HourlyValidatorSnapshot | null {
+  static loadInBlock(id: string): HourlyValidatorSnapshot | null {
     return changetype<HourlyValidatorSnapshot | null>(
-      store.get_in_block("HourlyValidatorSnapshot", id.toHexString())
+      store.get_in_block("HourlyValidatorSnapshot", id)
     );
   }
 
-  static load(id: Bytes): HourlyValidatorSnapshot | null {
+  static load(id: string): HourlyValidatorSnapshot | null {
     return changetype<HourlyValidatorSnapshot | null>(
-      store.get("HourlyValidatorSnapshot", id.toHexString())
+      store.get("HourlyValidatorSnapshot", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -629,21 +578,21 @@ export class HourlyValidatorSnapshot extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get hourlyVolume(): BigDecimal {
-    let value = this.get("hourlyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set hourlyVolume(value: BigDecimal) {
-    this.set("hourlyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
-  get hourlyTransactions(): i32 {
-    let value = this.get("hourlyTransactions");
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -651,41 +600,28 @@ export class HourlyValidatorSnapshot extends Entity {
     }
   }
 
-  set hourlyTransactions(value: i32) {
-    this.set("hourlyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get hourlyAvgBid(): BigDecimal {
-    let value = this.get("hourlyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set hourlyAvgBid(value: BigDecimal) {
-    this.set("hourlyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
 export class DailyValidatorSnapshot extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -696,36 +632,36 @@ export class DailyValidatorSnapshot extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type DailyValidatorSnapshot must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type DailyValidatorSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("DailyValidatorSnapshot", id.toBytes().toHexString(), this);
+      store.set("DailyValidatorSnapshot", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): DailyValidatorSnapshot | null {
+  static loadInBlock(id: string): DailyValidatorSnapshot | null {
     return changetype<DailyValidatorSnapshot | null>(
-      store.get_in_block("DailyValidatorSnapshot", id.toHexString())
+      store.get_in_block("DailyValidatorSnapshot", id)
     );
   }
 
-  static load(id: Bytes): DailyValidatorSnapshot | null {
+  static load(id: string): DailyValidatorSnapshot | null {
     return changetype<DailyValidatorSnapshot | null>(
-      store.get("DailyValidatorSnapshot", id.toHexString())
+      store.get("DailyValidatorSnapshot", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -754,21 +690,21 @@ export class DailyValidatorSnapshot extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get dailyVolume(): BigDecimal {
-    let value = this.get("dailyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set dailyVolume(value: BigDecimal) {
-    this.set("dailyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
-  get dailyTransactions(): i32 {
-    let value = this.get("dailyTransactions");
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -776,41 +712,28 @@ export class DailyValidatorSnapshot extends Entity {
     }
   }
 
-  set dailyTransactions(value: i32) {
-    this.set("dailyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get dailyAvgBid(): BigDecimal {
-    let value = this.get("dailyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set dailyAvgBid(value: BigDecimal) {
-    this.set("dailyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
 export class WeeklyValidatorSnapshot extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -821,36 +744,36 @@ export class WeeklyValidatorSnapshot extends Entity {
     );
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type WeeklyValidatorSnapshot must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.STRING,
+        `Entities of type WeeklyValidatorSnapshot must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("WeeklyValidatorSnapshot", id.toBytes().toHexString(), this);
+      store.set("WeeklyValidatorSnapshot", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): WeeklyValidatorSnapshot | null {
+  static loadInBlock(id: string): WeeklyValidatorSnapshot | null {
     return changetype<WeeklyValidatorSnapshot | null>(
-      store.get_in_block("WeeklyValidatorSnapshot", id.toHexString())
+      store.get_in_block("WeeklyValidatorSnapshot", id)
     );
   }
 
-  static load(id: Bytes): WeeklyValidatorSnapshot | null {
+  static load(id: string): WeeklyValidatorSnapshot | null {
     return changetype<WeeklyValidatorSnapshot | null>(
-      store.get("WeeklyValidatorSnapshot", id.toHexString())
+      store.get("WeeklyValidatorSnapshot", id)
     );
   }
 
-  get id(): Bytes {
+  get id(): string {
     let value = this.get("id");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set id(value: Bytes) {
-    this.set("id", Value.fromBytes(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
   }
 
   get target(): Bytes {
@@ -879,21 +802,34 @@ export class WeeklyValidatorSnapshot extends Entity {
     this.set("timestamp", Value.fromI32(value));
   }
 
-  get weeklyVolume(): BigDecimal {
-    let value = this.get("weeklyVolume");
+  get rangeVolume(): BigInt {
+    let value = this.get("rangeVolume");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set weeklyVolume(value: BigDecimal) {
-    this.set("weeklyVolume", Value.fromBigDecimal(value));
+  set rangeVolume(value: BigInt) {
+    this.set("rangeVolume", Value.fromBigInt(value));
   }
 
-  get weeklyTransactions(): i32 {
-    let value = this.get("weeklyTransactions");
+  get validators(): Array<Bytes> {
+    let value = this.get("validators");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytesArray();
+    }
+  }
+
+  set validators(value: Array<Bytes>) {
+    this.set("validators", Value.fromBytesArray(value));
+  }
+
+  get rangeTransactions(): i32 {
+    let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
       return 0;
     } else {
@@ -901,34 +837,21 @@ export class WeeklyValidatorSnapshot extends Entity {
     }
   }
 
-  set weeklyTransactions(value: i32) {
-    this.set("weeklyTransactions", Value.fromI32(value));
+  set rangeTransactions(value: i32) {
+    this.set("rangeTransactions", Value.fromI32(value));
   }
 
-  get weeklyAvgBid(): BigDecimal {
-    let value = this.get("weeklyAvgBid");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
-  }
-
-  set weeklyAvgBid(value: BigDecimal) {
-    this.set("weeklyAvgBid", Value.fromBigDecimal(value));
-  }
-
-  get topBid(): BigDecimal {
+  get topBid(): BigInt {
     let value = this.get("topBid");
     if (!value || value.kind == ValueKind.NULL) {
       throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toBigDecimal();
+      return value.toBigInt();
     }
   }
 
-  set topBid(value: BigDecimal) {
-    this.set("topBid", Value.fromBigDecimal(value));
+  set topBid(value: BigInt) {
+    this.set("topBid", Value.fromBigInt(value));
   }
 }
 
@@ -986,17 +909,17 @@ export class Searcher extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get bundlesLanded(): i32 {
+  get bundlesLanded(): BigInt {
     let value = this.get("bundlesLanded");
     if (!value || value.kind == ValueKind.NULL) {
-      return 0;
+      throw new Error("Cannot return null for a required field.");
     } else {
-      return value.toI32();
+      return value.toBigInt();
     }
   }
 
-  set bundlesLanded(value: i32) {
-    this.set("bundlesLanded", Value.fromI32(value));
+  set bundlesLanded(value: BigInt) {
+    this.set("bundlesLanded", Value.fromBigInt(value));
   }
 
   get totalTipped(): BigInt {
