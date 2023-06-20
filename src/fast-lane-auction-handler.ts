@@ -169,9 +169,9 @@ export function handleRelayFlashBid(event: RelayFlashBidEvent): void {
 
   const logIndex = event.logIndex;
 
-  // updateHourly(event, 'HOURLY', 3600);
+  updateHourly(event, 'HOURLY', 3600);
   updateDaily(event, 'DAILY', 3600*24);
-  // updateWeekly(event, 'WEEKLY', 3600*24*7);
+  updateWeekly(event, 'WEEKLY', 3600*24*7);
   
   // Figure out .logIndex stuff to make Ids
 }
