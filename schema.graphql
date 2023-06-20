@@ -71,7 +71,7 @@ type WeeklyValidatorSnapshot @entity {
   target: Validator!
   timestamp: Int!
   rangeVolume: BigInt!
-  validators: [Validator!]!
+
   rangeTransactions: Int
   topBid: BigInt!
 }

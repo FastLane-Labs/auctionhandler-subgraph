@@ -815,19 +815,6 @@ export class WeeklyValidatorSnapshot extends Entity {
     this.set("rangeVolume", Value.fromBigInt(value));
   }
 
-  get validators(): Array<Bytes> {
-    let value = this.get("validators");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytesArray();
-    }
-  }
-
-  set validators(value: Array<Bytes>) {
-    this.set("validators", Value.fromBytesArray(value));
-  }
-
   get rangeTransactions(): i32 {
     let value = this.get("rangeTransactions");
     if (!value || value.kind == ValueKind.NULL) {
